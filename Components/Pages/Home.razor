@@ -1,0 +1,367 @@
+﻿@page "/"
+@layout NullLayout
+@using Microsoft.AspNetCore.Components.Web
+@rendermode InteractiveServer
+
+<PageTitle>Click Counter App</PageTitle>
+
+<div class="app-wrapper">
+    <header class="top-navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <span class="brand-icon">⚡</span>
+                <span class="brand-text">Click Counter App</span>
+            </div>
+            <nav class="navbar-links">
+                <a href="" class="nav-link active">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Task 4: Hybrid State Counter</h2>
+                <p class="subtitle">Interactivity tracking combining click streams with direct field inputs</p>
+            </div>
+
+            <div class="card-body">
+                <div class="counter-display-zone">
+                    <span class="counter-label">Total Metric Count</span>
+                    <h1 class="counter-value animate-pulse">@clickCount</h1>
+                </div>
+
+                <div class="action-zone">
+                    <button class="btn btn-increment" @onclick="IncrementCount">
+                        <span class="btn-icon">🚀</span> Click to Increment
+                    </button>
+                </div>
+
+                <div class="calibration-zone">
+                    <div class="input-group">
+                        <label for="manualCount">Override Counter Value Manually:</label>
+                        <div class="input-wrapper">
+                            <input type="number"
+                                   id="manualCount"
+                                   @bind="clickCount"
+                                   class="form-control"
+                                   placeholder="0" />
+                            <span class="input-badge">Manual Bind</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p class="developer-credit">Developed by <span class="dev-name">Abdul Rehman Ali</span></p>
+            <p class="assignment-info">VP Lab Work &bull; Assignment 4 &bull; Task 4</p>
+        </div>
+    </footer>
+</div>
+
+@code {
+    // Shared operational data bound private property field variable
+    private int clickCount = 0;
+
+    // Event callback execution routing
+    private void IncrementCount()
+    {
+        clickCount++;
+    }
+}
+
+@code {
+    private class NullLayout : LayoutComponentBase
+    {
+        protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder builder)
+        {
+            builder.AddContent(0, Body);
+        }
+    }
+}
+
+<style>
+    /* Global Layout Setup */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: #0f172a !important; /* Premium Dark slate layout theme base */
+        color: #f1f5f9;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        height: 100%;
+    }
+
+    .app-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* Premium Header (Pushed to Edges) */
+    .top-navbar {
+        background: #1e293b;
+        border-bottom: 1px solid #334155;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .navbar-container {
+        width: 100%;
+        padding: 0.75rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .brand-icon {
+        font-size: 1.5rem;
+    }
+
+    .brand-text {
+        font-size: 1.3rem;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        background: linear-gradient(135deg, #a855f7, #3b82f6); /* Purple to Royal Blue gradient */
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .navbar-links .nav-link {
+        color: #a855f7;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        background-color: rgba(168, 85, 247, 0.1);
+        transition: all 0.2s;
+    }
+
+    .navbar-links .nav-link:hover {
+        background-color: rgba(168, 85, 247, 0.2);
+    }
+
+    /* Content Layout Card Container */
+    .container {
+        flex: 1 0 auto;
+        width: 100%;
+        max-width: 600px;
+        margin: 4rem auto;
+        padding: 0 1rem;
+        box-sizing: border-box;
+    }
+
+    .card {
+        background: #1e293b;
+        border-radius: 20px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        border: 1px solid #334155;
+        overflow: hidden;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #1e1b4b, #311042); /* Dark interstellar base tint */
+        color: white;
+        padding: 2.25rem 2rem;
+        border-bottom: 1px solid #334155;
+    }
+
+    .card-header h2 {
+        margin: 0;
+        font-size: 1.65rem;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+    }
+
+    .subtitle {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.8;
+        font-size: 0.95rem;
+        color: #cbd5e1;
+    }
+
+    .card-body {
+        padding: 2.5rem 2rem;
+        background-color: #1e293b;
+    }
+
+    /* Unique Metrics Dashboard Ring/Box */
+    .counter-display-zone {
+        background: linear-gradient(145deg, #0f172a, #1e293b);
+        border: 2px solid #334155;
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.4);
+        margin-bottom: 2rem;
+    }
+
+    .counter-label {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #94a3b8;
+        font-weight: 700;
+    }
+
+    .counter-value {
+        margin: 0.5rem 0 0 0;
+        font-size: 4.5rem;
+        font-weight: 900;
+        font-family: ui-monospace, monospace;
+        background: linear-gradient(135deg, #c084fc, #6366f1);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1;
+    }
+
+    /* Core Action Interface Elements */
+    .action-zone {
+        margin-bottom: 2.5rem;
+    }
+
+    .btn-increment {
+        width: 100%;
+        background: linear-gradient(135deg, #a855f7, #4f46e5);
+        color: white;
+        border: none;
+        padding: 1.1rem 1.5rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(168, 85, 247, 0.4);
+        transition: all 0.15s ease-in-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-increment:hover {
+        opacity: 0.95;
+        box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn-increment:active {
+        transform: scale(0.98);
+    }
+
+    /* Override Calibration Grid Base Layouts */
+    .calibration-zone {
+        border-top: 1px solid #334155;
+        padding-top: 2rem;
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .input-group label {
+        font-weight: 600;
+        color: #94a3b8;
+        font-size: 0.9rem;
+    }
+
+    .input-wrapper {
+        display: flex;
+        position: relative;
+        align-items: center;
+    }
+
+    /* Custom Stylized Numerical Entry Node fields */
+    .form-control {
+        display: block !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 0.9rem 6.5rem 0.9rem 1.1rem !important; /* Right padding preserves text bounds from badge overlays */
+        font-size: 1.1rem !important;
+        border: 2px solid #334155 !important;
+        border-radius: 10px !important;
+        background-color: #0f172a !important;
+        color: #f8fafc !important;
+        outline: none !important;
+        transition: all 0.2s ease-in-out;
+        font-family: ui-monospace, monospace;
+    }
+
+    .form-control:focus {
+        border-color: #6366f1 !important;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25) !important;
+    }
+
+    /* Structural Element Badge Overlay Indicator */
+    .input-badge {
+        position: absolute;
+        right: 10px;
+        background-color: #334155;
+        color: #cbd5e1;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        border-radius: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        pointer-events: none;
+    }
+
+    /* Sticky Footer Custom Elements */
+    .app-footer {
+        flex-shrink: 0;
+        background-color: #1e293b;
+        border-top: 1px solid #334155;
+        padding: 1.5rem 2rem;
+        text-align: center;
+        margin-top: auto;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .developer-credit {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #94a3b8;
+        font-weight: 500;
+    }
+
+    .dev-name {
+        color: #f1f5f9;
+        font-weight: 700;
+    }
+
+    .assignment-info {
+        margin: 0.35rem 0 0 0;
+        font-size: 0.8rem;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /* Micro-Interactions */
+    @@keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.95; }
+    }
+</style>
